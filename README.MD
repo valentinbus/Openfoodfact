@@ -16,3 +16,7 @@ Ces données ont également été mise en local dans le projet dans le cas ou la
 Ce fichier permet d'établir la connexion entre la base de donnée et les données elles mêmes.
 Nous allons utiliser ce script pour populer la db
 
+Dans le fichier collecting_data.py nous avons la classe du même nom qui se découpe de la manière suivante:
+    -on lui passe l'url d'openfoodfact 
+    -la première méthode va être de parser les éléments que l'on veut en fonction de la catégorie
+    -

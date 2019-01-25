@@ -26,12 +26,12 @@ import getpass
 
 cnx = mysql.connector.connect(
     user='root', 
-    password='', 
+    password='root', 
     host='localhost', 
     database='OpenfoodFact'
 )
 cursor = cnx.cursor()
-
+print('CURSOR---->', cursor)
 
 # === Cela permet d'executer le fichier .sql pour créer les tables dans la bdd (fonctionnel)=== 
 def create_db():

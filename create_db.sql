@@ -3,7 +3,7 @@ SET time_zone = "+00:00";
 --
 --
 CREATE TABLE IF NOT EXISTS `category` (
-  `id` smallint(3) NOT NULL AUTO_INCREMENT,
+  `id` smallint(3) NOT NULL,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

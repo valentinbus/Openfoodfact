@@ -12,17 +12,17 @@ import getpass
 
 # On définit les inputs user pour qu'il puisse se connecter à sa bdd
 # On part du principe que l'utilisateur à déjà sa database mais pas son contenue
-# user = str(input('Quel est ton username ?'))
-# password = getpass.getpass('MDP?')
-# host = str(input('host?'))
-# database=str(input('DB?'))
+user = str(input('Quel est ton username ?'))
+password = getpass.getpass('MDP?')
+host = str(input('host?'))
+database=str(input('DB?'))
 
-# cnx = mysql.connector.connect(
-#     user=user, 
-#     password=password, 
-#     host=host, 
-#     database=database
-# )
+cnx = mysql.connector.connect(
+    user=user, 
+    password=password, 
+    host=host, 
+    database=database
+)
 
 cnx = mysql.connector.connect(
     user='root', 

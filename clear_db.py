@@ -8,28 +8,21 @@ cnx = mysql.connector.connect(
     database = 'Openfoodfact'
 )
 
-def query1():
-    cursor = cnx.cursor()
+cursor = cnx.cursor()
+
+try:
     cursor.execute('drop table substitue;')
     cnx.commit()
     cursor.close()
 
-def query2():
     cursor = cnx.cursor()
     cursor.execute('drop table product;')
     cnx.commit()
     cursor.close()
 
-def query3():
     cursor = cnx.cursor()
     cursor.execute('drop table category;')
     cnx.commit()
     cursor.close()
-
-
-
-query1()
-query2()
-query3()
-
-
+except mysql.connector.errors.ProgrammingError as err:
+    print('La base de donnée est déjà clean')

@@ -1,6 +1,7 @@
 import requests
 import pprint
 import mysql.connector
+from constants import CATEGORY
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -15,19 +16,20 @@ class CollectData:
         self.products_list = []
         self.category_number = None
 
-    def create_url(self, category, category_number):
+    def create_url(self, category):
         '''
         Permet d'établir le nouvel url à parser
         en fonction de la catégorie
         '''
-        self.category_number = category_number
+        #self.category_number = category_number
         self.url = self.base_url + str(category)
         return category #on le retourne pour pouvoir le placer en argument dans la fonction create_databse
 
-    def json_to_dict_pizza(self): # Définir le paramêtre catégorie 
+    def json_to_dict(self, category_number): # Définir le paramêtre catégorie 
         '''
         Convert reponse of url parse to dict
         '''
+        self.category_number = category_number
         parameters = {'json' : True}
         api_call = requests.get(self.url, params=parameters)
         r = api_call.json()
@@ -94,17 +96,23 @@ class Sql:
         cursor.execute(query)
         cursor.close()
       
-    def map_category(self, category, category_id):
-        query = "Insert ignore into category (id, name) Values ({}, '{}');".format(category_id, category)
-        print('=======================================\n',
-        '=============================================\n',
-        query
-        )
+    def map_category(self, category):
+        '''
+        
+        '''
+        query = "Insert into category (name) Values ('{}');".format(category)
         cnx = self.connect_db()
         cursor = cnx.cursor()
         cursor.execute(query)
         cnx.commit()
+        cursor.close
+
+        cursor = cnx.cursor()
+        cursor.execute("select id from category where name='{}';".format(category))
+        result = cursor.fetchall()
         cursor.close()
+        category_number = result[0][0]
+        return category_number
 
     def map_data(self, query): #query ici est le retour de fonction CollectData.dict_to_insert_query()
         '''
@@ -119,36 +127,24 @@ class Sql:
             cursor.close()
 
 
-        
-
-
-
-
-
-
 ############################
 #########TEST###############
 ############################     
 
-###TEST CLASS  CollectData####
-     
-# collect_pizza = CollectData('https://fr.openfoodfacts.org/categorie/')
-# collect_pizza.create_url('pizza')
-# print(collect_pizza.url)
-# print(collect_pizza.json_to_dict_pizza())
-# print(collect_pizza.dict_to_insert_query())
+sql = Sql('root', 'root', 'localhost', 'Openfoodfact') #tous les paramêtres pour établir la connexion
+sql.create_database() #initialise les tables de la db
 
 
-###TEST CLASS Sql###
-sql = Sql('root', 'root', 'localhost', 'Openfoodfact')
-sql.create_database()
+###INITIALISATION###
 
-collect_pizza = CollectData('https://fr.openfoodfacts.org/categorie/')
-category_pizzas = collect_pizza.create_url('pizzas', 1)
-collect_pizza.json_to_dict_pizza()
-query = collect_pizza.dict_to_insert_query()
+for i in range(len(CATEGORY)):
+    cat_number = sql.map_category(CATEGORY[i]) #insert la catégorie et retourne l'id de la catégorie
 
-#print('QUERY& ======>', query)
+    init_collect_data = CollectData('https://fr.openfoodfacts.org/categorie/') #initialise le lien générique qui sera modifié en fonction des catégories 
 
-sql.map_category(category_pizzas, 1)
-sql.map_data(query)
+
+    url = init_collect_data.create_url(CATEGORY[i]) #crée l'url de la catégorie en question
+    init_collect_data.json_to_dict(cat_number) #crée le dict qui sera insérer dans la table product et insére la foreign key a savoir l'id de la catégorie de la table category
+    query = init_collect_data.dict_to_insert_query() #crée la query pour insérer les datas 
+    sql.map_data(query)
+

@@ -44,7 +44,7 @@ class CollectData:
                     'category_fk': self.category_number
                 }
             except KeyError:
-                print("la clé n'a pas été trouvée =================================")
+                #print("la clé n'a pas été trouvée =================================")
                 pass
             self.products_list.append(product)
             #pp.pprint(product)
@@ -127,24 +127,5 @@ class Sql:
             cursor.close()
 
 
-############################
-#########TEST###############
-############################     
 
-sql = Sql('root', 'root', 'localhost', 'Openfoodfact') #tous les paramêtres pour établir la connexion
-sql.create_database() #initialise les tables de la db
-
-
-###INITIALISATION###
-
-for i in range(len(CATEGORY)):
-    cat_number = sql.map_category(CATEGORY[i]) #insert la catégorie et retourne l'id de la catégorie
-
-    init_collect_data = CollectData('https://fr.openfoodfacts.org/categorie/') #initialise le lien générique qui sera modifié en fonction des catégories 
-
-
-    url = init_collect_data.create_url(CATEGORY[i]) #crée l'url de la catégorie en question
-    init_collect_data.json_to_dict(cat_number) #crée le dict qui sera insérer dans la table product et insére la foreign key a savoir l'id de la catégorie de la table category
-    query = init_collect_data.dict_to_insert_query() #crée la query pour insérer les datas 
-    sql.map_data(query)
 

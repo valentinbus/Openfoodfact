@@ -1,16 +1,40 @@
-import argparse
-from init import init_db
+import json
+import re
+import mysql.connector
+import getpass
+from constants import CATEGORY
+
+# with open('./local/categories.json', 'r') as file:
+#         data = file.read()
+
+# dic = json.loads(data)
+
+# list_category_name = []
+
+# for i in range(len(dic['tags'])):
+#         list_category_name.append(dic['tags'][i]['name'])
 
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--init', '-i', action = 'store_true', help='initalise the db')
-    parser.add_argument('--drop', '-d')
-    args = parser.parse_args()
-    if args.init:
-        init.init_db()
+# list_cat_pizza = []
+
+# for i in range(len(list_category_name)):
+#         if 'pizzas' in list_category_name[i]:
+#                 list_cat_pizza.append(list_category_name[i])
+
+# list_p = []
+
+# for i in range(len(list_cat_pizza)):     
+#         list_p.append(re.findall('^en:pizzas', list_cat_pizza[i]))
+#         print(list_cat_pizza[i])
+
+# print(list_p)
 
 
-if __name__ == "__main__":
-    main()
+a = True
+while a:
+    try:
+        cat_id = int(input('Chosse id cat : \n'))
+        a = False
+    except ValueError:
+        print('It has to be a number')

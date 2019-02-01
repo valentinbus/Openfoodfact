@@ -30,11 +30,15 @@ from constants import CATEGORY
 
 # print(list_p)
 
+cnx = mysql.connector.connect(
+    user= 'root',
+    password= 'root',
+    host= 'localhost',
+    database= 'Openfoodfact'
+)
+cursor = cnx.cursor()
 
-a = True
-while a:
-    try:
-        cat_id = int(input('Chosse id cat : \n'))
-        a = False
-    except ValueError:
-        print('It has to be a number')
+cursor.execute('drop table substitue;')
+cnx.commit()
+cursor.close()
+print('table drop')

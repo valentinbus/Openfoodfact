@@ -21,8 +21,9 @@ class CollectData:
         Permet d'établir le nouvel url à parser
         en fonction de la catégorie
         '''
-        #self.category_number = category_number
+        print("generate url")
         self.url = self.base_url + str(category)
+        print("Url {} is created".format(self.url))
         return category #on le retourne pour pouvoir le placer en argument dans la fonction create_databse
 
     def json_to_dict(self, category_number): # Définir le paramêtre catégorie 
@@ -82,12 +83,13 @@ class Sql:
         )
         return cnx
         
+        
     def create_database(self): #category doit être le même argument que pour la fonction create url
         '''
         Lis et éxécute le fichier .sql du dossier pour créer les tables 
         dans la db
-        '''      
-        cnx = self.connect_db()
+        ''' 
+        cnx = self.connect_db()     
         cursor = cnx.cursor()
 
         with open('./create_db.sql', 'r') as file:
@@ -118,8 +120,8 @@ class Sql:
         '''
         Peuple les tables avec les données recup sur openfoodfact
         '''
-        cnx = self.connect_db()
         query = query.split(';')
+        cnx = self.connect_db()
         for qry in query :
             cursor = cnx.cursor()
             cursor.execute(qry)

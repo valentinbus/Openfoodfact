@@ -7,24 +7,28 @@ def init_db():
 
     sql = Sql('root', 'root', 'localhost', 'Openfoodfact') #tous les paramêtres pour établir la connexion
     cnx = sql.connect_db()
-    
     cursor = cnx.cursor()
 
     try:
+        print('drop table ....')
         cursor.execute('drop table substitue;')
         cnx.commit()
         cursor.close()
+        print('la table substitue est drop')
 
         cursor = cnx.cursor()
         cursor.execute('drop table product;')
         cnx.commit()
         cursor.close()
+        print('la table product est drop')
 
         cursor = cnx.cursor()
         cursor.execute('drop table category;')
         cnx.commit()
         cursor.close()
-    except mysql.connector.errors.ProgrammingError as err:
+        print('la table category est drop')
+
+    except mysql.connector.errors.ProgrammingError:
         print('La base de donnée est déjà clean')
 
 
@@ -32,7 +36,7 @@ def init_db():
 
 
     ###MAP DATA###
-
+    print('ça continue')
     for i in range(len(CATEGORY)):
         cat_number = sql.map_category(CATEGORY[i]) #insert la catégorie et retourne l'id de la catégorie
 

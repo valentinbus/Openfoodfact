@@ -17,14 +17,23 @@ class Program:
         self.database = 'Openfoodfact'
         self.cnx = None
         self.cat_id = None
+        self.nutriscore_product_choose = None
 
     def get_inf(self):
+        '''
+        Recup les infos pour la connexion a la db
+        '''
+
         self.username = str(input('Quel est ton username? \n'))
         self.password = getpass.getpass('Quel est ton pass ? \n')
         self.host = 'localhost'
 
 
     def connection_db(self):
+        '''
+        etablie la connexion avec la db
+        '''
+
         try:
             self.cnx = mysql.connector.connect(
                 user = self.username,
@@ -43,15 +52,15 @@ class Program:
             return False
 
 
-    def test_connection_db(self):
-        while prog.connection_db() is False:
-            prog.get_inf()
-            prog.connection_db()
-            print(
-                'Le username ou pass est incorrect.\n',
-                'Veuillez de nouveau insérer vos identifiants:\n'
-            )
-        print("Login successfull\n\n")
+    # def test_connection_db(self):
+    #     while prog.connection_db() is False:
+    #         prog.get_inf()
+    #         prog.connection_db()
+    #         print(
+    #             'Le username ou pass est incorrect.\n',
+    #             'Veuillez de nouveau insérer vos identifiants:\n'
+    #         )
+    #     print("Login successfull\n\n")
 
     
     def show_category(self):
@@ -86,34 +95,55 @@ class Program:
         print('Here list of products in this category: \n')
         
         cursor = self.cnx.cursor()
-        cursor.execute('select name from product where category_fk={};'.format(self.cat_id))
+        cursor.execute('select id, name from product where category_fk={};'.format(self.cat_id))
         result = cursor.fetchall()
+
         for i in range(len(result)):
-            print('{}. {}'.format(i+1, result[i][0]))
+            print('{}. {}'.format(result[i][0], result[i][1])) #fait matcher l'id des produits avec leurs noms
 
         a = True
         while a:
             try:
                 self.id_product_choose = int(input('Choose id product: \n'))
                 cursor.execute('select nutriscore from product where id={} and category_fk={};'.format(self.id_product_choose, self.cat_id))
-                nutriscore_product_choose = cursor.fetchall()[0][0]
+                self.nutriscore_product_choose = cursor.fetchall()[0][0]
                 a = False
             except ValueError:
                 print('It has to be a number')
             except IndexError:
                 print('You have to choose a good number for product')
 
-        print('The product you choose have this nutriscore : {}'.format(nutriscore_product_choose))
+        cursor.close()
+        print('The product you choose have this nutriscore : {}\n\n'.format(self.nutriscore_product_choose))
 
     def purpose_substitue(self):
-        pass
+        '''
+        Purpose substitue product with higher nutriscore
+        '''
+        cursor = self.cnx.cursor()
+        query = (
+            'select name, nutriscore from product where nutriscore <= "{}" and category_fk={};'.format(self.nutriscore_product_choose, self.cat_id)
+        )
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        #affiche le résultat des produits meilleurs ou equivalent
+        print('Here the list of product that are better:\n')
+        for i in range(len(result)):
+            print('{}, nutriscore ===>{}'.format(result[i][0], result[i][1]))
+            
+    
+
+
+
+
         
         
         
 
 prog = Program()
 
-# prog.get_inf()
+prog.get_inf()
 
 while prog.connection_db() is False:
     prog.get_inf()
@@ -121,4 +151,5 @@ while prog.connection_db() is False:
 
 prog.show_category()
 prog.show_product()
+prog.purpose_substitue()
 

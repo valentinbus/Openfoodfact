@@ -21,3 +21,6 @@ Dans la classe Sql on s'occupe de toute les manipulations sur la bdd:
     -deuxième méthode on éxécute le fichier sql permettant de créé les tables 
     -troisième méthode on peuple les tables avec les données recup sur OpenfoodFact
 
+
+Pour une première utilisation il faut executer la commande :
+python3 main.py --init 

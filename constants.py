@@ -1,4 +1,5 @@
 CATEGORY = [
     'pizzas',
-    'desserts'
+    'desserts',
+    'chocolats-noirs'
 ]

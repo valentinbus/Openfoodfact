@@ -77,7 +77,7 @@ class Program:
         a = True
         while a:
             try:
-                self.cat_id = int(input('Chosse id cat : \n'))
+                self.cat_id = int(input('\n\nChosse id cat : \n'))
                 cat_choose = dict_category[self.cat_id]
                 a = False
             except ValueError:
@@ -104,7 +104,7 @@ class Program:
         a = True
         while a:
             try:
-                self.id_product_choose = int(input('Choose id product: \n'))
+                self.id_product_choose = int(input('\nChoose id product: \n'))
                 cursor.execute('select nutriscore from product where id={} and category_fk={};'.format(self.id_product_choose, self.cat_id))
                 self.nutriscore_product_choose = cursor.fetchall()[0][0]
                 a = False
@@ -114,7 +114,7 @@ class Program:
                 print('You have to choose a good number for product')
 
         cursor.close()
-        print('The product you choose have this nutriscore : {}\n\n'.format(self.nutriscore_product_choose))
+        print('The product you choose have this nutriscore : {} \n\n'.format(self.nutriscore_product_choose))
 
     def purpose_substitue(self):
         '''
@@ -132,7 +132,14 @@ class Program:
         for i in range(len(result)):
             print('{}, nutriscore ===>{}'.format(result[i][0], result[i][1]))
             
-    
+        save = input('\nDo you want to save substitue?\n"Y" or "N"\n').upper()
+        
+        while (save != 'Y') and (save!='N'):
+            print('You have to put "Y" or "N"')
+            
+        if save == 'Y':
+            query = ''
+
 
 
 

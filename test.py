@@ -30,15 +30,22 @@ from constants import CATEGORY
 
 # print(list_p)
 
-cnx = mysql.connector.connect(
-    user= 'root',
-    password= 'root',
-    host= 'localhost',
-    database= 'Openfoodfact'
-)
-cursor = cnx.cursor()
+# cnx = mysql.connector.connect(
+#     user= 'root',
+#     password= 'root',
+#     host= 'localhost',
+#     database= 'Openfoodfact'
+# )
+# cursor = cnx.cursor()
 
-cursor.execute('drop table substitue;')
-cnx.commit()
-cursor.close()
-print('table drop')
+# cursor.execute('drop table substitue;')
+# cnx.commit()
+# cursor.close()
+# print('table drop')
+
+while True:
+    try:
+        print('hello')
+        False
+    except:
+        pass

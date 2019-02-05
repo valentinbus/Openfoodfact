@@ -2,7 +2,8 @@ import json
 import re
 import mysql.connector
 import getpass
-from classes.constants import CATEGORY
+from constants import CATEGORY
+
 
 class Program:
     '''
@@ -40,7 +41,6 @@ class Program:
                 host = self.host,
                 database = self.database
             )
-            print("Now, you're connected\n\n")
             return True
 
         except mysql.connector.errors.ProgrammingError :
@@ -49,17 +49,6 @@ class Program:
                 'Veuillez de nouveau insérer vos identifiants : \n'
             )
             return False
-
-
-    # def test_connection_db(self):
-    #     while prog.connection_db() is False:
-    #         prog.get_inf()
-    #         prog.connection_db()
-    #         print(
-    #             'Le username ou pass est incorrect.\n',
-    #             'Veuillez de nouveau insérer vos identifiants:\n'
-    #         )
-    #     print("Login successfull\n\n")
 
     
     def show_category(self):

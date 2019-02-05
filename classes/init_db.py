@@ -1,8 +1,8 @@
 import argparse
 import mysql.connector
-from collect_data import CollectData
-from sql import Sql
-from constants import CATEGORY
+from classes.collect_data import CollectData
+from classes.sql import Sql
+from classes.constants import CATEGORY
 
 
 class Init:
@@ -57,5 +57,3 @@ class Init:
             if args.init:
                 self.init_db()
                 return True
-            else:
-                return False

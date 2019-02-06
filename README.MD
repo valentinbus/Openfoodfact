@@ -59,19 +59,18 @@ For a first use it is necessary to execute the command:
 
 We will ask at first:
 
--username
-
--password
+ - username
+ - password
 
 These elements are the elements that the user has defined himself to access his database.
 
   
 
-**Warning** 
+## **Warning**
 
 *It is imperative that the database of the user is called 'openfoodfact' (key sensitive)*
 
-  
+  ##
   
 
 Once the connection is established the user will have to choose between:

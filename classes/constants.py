@@ -1,5 +1,16 @@
 CATEGORY = [
     'pizzas',
     'desserts',
-    'chocolats-noirs'
+    'chocolats-noirs',
+    'jus-de-pommes-pur-jus',
+    'pur-jus-d-oranges-bio',
+    'fromage-frais-allege',
+    'rillettes-de-thon', 
+    'pilons-de-poulet'
 ]
+
+# ,
+
+#     'pur-jus-d-oranges-bio',
+#     'fromage-frais-allege',
+#     'legumes-prepares-surgeles'

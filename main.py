@@ -7,14 +7,19 @@ def main():
 
     prog.get_inf()
 
-    while prog.connection_db() is False:
-        prog.get_inf()
-        prog.connection_db()
-    print("Now you're connected\n\n")
+    a = True
+    while a:
+        while prog.connection_db() is False:
+            prog.get_inf()
+            prog.connection_db()
+        #print("Now you're connected\n\n")
+        
+        prog.consult_substitue()
+        prog.show_category()
+        prog.show_product()
+        prog.purpose_substitue()
 
-    prog.show_category()
-    prog.show_product()
-    prog.purpose_substitue()
+        a = prog.continu()
 
 
 init_db = Init()

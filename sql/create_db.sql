@@ -23,9 +23,9 @@ CREATE TABLE IF NOT EXISTS `product` (
 --
 CREATE TABLE IF NOT EXISTS `substitue` (
   `id` smallint(3) NOT NULL AUTO_INCREMENT,
-  `id_product to substitue_fk` smallint(3) NOT NULL,
-  `id_product substitue_fk` smallint(3) NOT NULL,
+  `id_product_to_substitue_fk` smallint(3) NOT NULL,
+  `id_product_substitue_fk` smallint(3) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `substitue_ibfk_3` FOREIGN KEY (`id_product substitue_fk`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `substitue_ibfk_4` FOREIGN KEY (`id_product to substitue_FK`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `substitue_ibfk_3` FOREIGN KEY (`id_product_substitue_fk`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `substitue_ibfk_4` FOREIGN KEY (`id_product_to_substitue_FK`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

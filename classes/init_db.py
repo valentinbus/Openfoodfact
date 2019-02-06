@@ -20,18 +20,25 @@ class Init:
             cursor.execute('drop table substitue;')
             cnx.commit()
             cursor.close()
+        except mysql.connector.errors.ProgrammingError:
+            print('La table substitue de donnée est déjà clean')
 
+        try:
             cursor = cnx.cursor()
             cursor.execute('drop table product;')
             cnx.commit()
             cursor.close()
+        except mysql.connector.errors.ProgrammingError:
+            print('La table product de donnée est déjà clean')
 
+        try:
             cursor = cnx.cursor()
             cursor.execute('drop table category;')
             cnx.commit()
             cursor.close()
         except mysql.connector.errors.ProgrammingError:
-            print('La base de donnée est déjà clean')
+            print('La table category de donnée est déjà clean')
+        
 
 
         sql.create_database() #initialise les tables de la db

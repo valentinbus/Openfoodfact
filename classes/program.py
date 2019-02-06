@@ -17,6 +17,8 @@ class Program:
         self.cnx = None
         self.cat_id = None
         self.nutriscore_product_choose = None
+        self.id_product_choose = None
+        self.id_product_substitue = None
 
     def get_inf(self):
         '''
@@ -40,28 +42,56 @@ class Program:
                 host = self.host,
                 database = self.database
             )
-            print("Now, you're connected\n\n")
+            #print("Now, you're connected\n\n")
             return True
 
         except mysql.connector.errors.ProgrammingError :
             print(
-                'Le username ou pass est incorrect.\n',
-                'Veuillez de nouveau insérer vos identifiants : \n'
+                'Username or pass is incorrect.\n',
+                'Please retry to login : \n'
             )
             return False
 
+        # print("Now, you're connected\n\n")
 
-    # def test_connection_db(self):
-    #     while prog.connection_db() is False:
-    #         prog.get_inf()
-    #         prog.connection_db()
-    #         print(
-    #             'Le username ou pass est incorrect.\n',
-    #             'Veuillez de nouveau insérer vos identifiants:\n'
-    #         )
-    #     print("Login successfull\n\n")
+    def consult_substitue(self):
+        '''
+        Ask to user if he wants to see his substitues
+        '''
 
-    
+        a = True
+        while a:
+            try:
+                response = int(input(
+                '1 - Retrouver mes aliments substitués.\n2 - Quel aliment souhaitez-vous remplacer ?\n'
+                ).upper())
+
+                while (response!=2) and (response!=1):
+                    print('You have to put 1 or 2')
+                
+                a = False
+
+            except ValueError:
+                print('It has to be a number')
+
+        if response == 1:
+            query = 'SELECT name, nutriscore, store, link  FROM product INNER JOIN substitue on substitue. id_product_substitue_fk = product.id;'
+
+            cursor = self.cnx.cursor()
+            cursor.execute(query)
+            results = cursor.fetchall()
+
+            i = 1
+            print('\n\nHere list of your substitues :\n--')
+            for result in results:
+                print('{}. {} with nutriscore : {}. Can buy at {} more information on this link : {}'.format(i, result[0], result[1], result[2], result[3]))
+                i+=1
+
+            print('Ok, now continue!\n')
+            
+        else:
+            pass
+
     def show_category(self):
         '''
         Show all categories dispnibles for user
@@ -121,21 +151,51 @@ class Program:
         '''
         cursor = self.cnx.cursor()
         query = (
-            'select name, nutriscore from product where nutriscore <= "{}" and category_fk={};'.format(self.nutriscore_product_choose, self.cat_id)
+            'select id, name, nutriscore, store, link from product where nutriscore <= "{}" and category_fk={};'.format(self.nutriscore_product_choose, self.cat_id)
         )
         cursor.execute(query)
         result = cursor.fetchall()
 
         #affiche le résultat des produits meilleurs ou equivalent
-        print('Here the list of product that are better:\n')
+        print('Here the list of product that are better or equivalent:\n')
         for i in range(len(result)):
-            print('{}, nutriscore ===>{}'.format(result[i][0], result[i][1]))
-            
+            #print('{}. {}, nutriscore ===>{}'.format(result[i][0], result[i][1], result[i][2]))
+            print('{}. {} with nutriscore : {}. Can buy at {} more information on this link : {}'.format(result[i][0], result[i][1], result[i][2], result[i][3], result[i][4]))
+
+        #define substitue
+        a = True
+        while a:
+            try:
+                self.id_product_substitue = int(input('\nChoose id product: \n'))
+                a = False
+            except ValueError:
+                print('It has to be a number')
+            except IndexError:
+                print('You have to choose a good number for product')
+
+
+        #insert into substitue results
         save = input('\nDo you want to save substitue?\n"Y" or "N"\n').upper()
         
         while (save != 'Y') and (save!='N'):
             print('You have to put "Y" or "N"')
-            
+
+
         if save == 'Y':
-            query = ''
+            query = 'INSERT INTO substitue (id_product_to_substitue_fk, id_product_substitue_fk) VALUES ({}, {});'.format(self.id_product_choose, self.id_product_substitue)
+            cursor.execute(query)
+            self.cnx.commit()
+
+
+        cursor.close()
+
+    def continu(self):
+        response = str(input('Do you want to continue ?\n"Y" or "N"\n').upper())
+        while (response!='Y') and (response!='N'):
+            print('You have to put "Y" or "N"')
+
+        if response == 'Y':
+            return True
+        else:
+            return False
 

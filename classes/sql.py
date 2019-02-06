@@ -25,7 +25,7 @@ class Sql:
         return cnx
         
         
-    def create_database(self): #category doit être le même argument que pour la fonction create url
+    def create_database(self): #category has to be same argument to create url function
         '''
         Read and execute the .sql file in the folder to create the tables
         in the db
@@ -57,7 +57,7 @@ class Sql:
         category_number = result[0][0]
         return category_number
 
-    def map_data(self, query): #query ici est le retour de fonction CollectData.dict_to_insert_query()
+    def map_data(self, query): #here query is the return of dict_to_insert_query function
         '''
         Peuple les tables avec les données recup sur openfoodfact
         '''

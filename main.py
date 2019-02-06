@@ -12,7 +12,7 @@ def main():
         while prog.connection_db() is False:
             prog.get_inf()
             prog.connection_db()
-        #print("Now you're connected\n\n")
+        print("Now you're connected\n\n")
         
         prog.consult_substitue()
         prog.show_category()

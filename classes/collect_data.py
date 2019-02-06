@@ -13,15 +13,14 @@ class CollectData:
 
     def create_url(self, category):
         '''
-        Permet d'établir le nouvel url à parser
-        en fonction de la catégorie
+        create new url to parse with category in paramter
         '''
         print("generate url")
         self.url = self.base_url + str(category)
         print("Url {} is created".format(self.url))
-        return category #on le retourne pour pouvoir le placer en argument dans la fonction create_databse
+        return category #return to put him in paramter of function create_databse
 
-    def json_to_dict(self, category_number): # Définir le paramêtre catégorie 
+    def json_to_dict(self, category_number): # define parameter category
         '''
         Convert reponse of url parse to dict
         '''
@@ -50,7 +49,7 @@ class CollectData:
         '''  
         query = ''
         for product in self.products_list:
-            a = [f'"{x}"' for x in product.values()] #f pour .format 
+            a = [f'"{x}"' for x in product.values()] #f for .format 
             qry = "Insert Into product (%s) Values (%s);" % (', '.join(product.keys()), ', '.join(a))
             query+=qry
         return query

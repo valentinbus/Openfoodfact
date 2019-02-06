@@ -11,7 +11,7 @@ class Init:
 
     def init_db(self):
 
-        sql = Sql('root', 'root', 'localhost', 'Openfoodfact') #tous les paramêtres pour établir la connexion
+        sql = Sql('root', 'root', 'localhost', 'Openfoodfact') #all parameters to etablish connection
         cnx = sql.connect_db()
         
         cursor = cnx.cursor()
@@ -41,20 +41,20 @@ class Init:
         
 
 
-        sql.create_database() #initialise les tables de la db
+        sql.create_database() #initialise table in db
 
 
         ###MAP DATA###
 
         for i in range(len(CATEGORY)):
-            cat_number = sql.map_category(CATEGORY[i]) #insert la catégorie et retourne l'id de la catégorie
+            cat_number = sql.map_category(CATEGORY[i]) #insert category and return the id of category
 
-            init_collect_data = CollectData('https://fr.openfoodfacts.org/categorie/') #initialise le lien générique qui sera modifié en fonction des catégories 
+            init_collect_data = CollectData('https://fr.openfoodfacts.org/categorie/') #initialise generic lien that will be modify in function of category
 
 
-            init_collect_data.create_url(CATEGORY[i]) #crée l'url de la catégorie en question
-            init_collect_data.json_to_dict(cat_number) #crée le dict qui sera insérer dans la table product et insére la foreign key a savoir l'id de la catégorie de la table category
-            query = init_collect_data.dict_to_insert_query() #crée la query pour insérer les datas 
+            init_collect_data.create_url(CATEGORY[i]) #create url of category 
+            init_collect_data.json_to_dict(cat_number) #create dictionary that will be insert in product table and insert foreign key (id of category)
+            query = init_collect_data.dict_to_insert_query() #create query to insert data
             sql.map_data(query)
 
     def arg(self):

@@ -25,14 +25,14 @@ class Program:
         Recup les infos pour la connexion a la db
         '''
 
-        self.username = str(input('Quel est ton username? \n'))
-        self.password = getpass.getpass('Quel est ton pass ? \n')
+        self.username = str(input('What is your username ? \n'))
+        self.password = getpass.getpass('What is your password ? \n')
         self.host = 'localhost'
 
 
     def connection_db(self):
         '''
-        etablie la connexion avec la db
+        etablish connection with db
         '''
 
         try:
@@ -42,7 +42,6 @@ class Program:
                 host = self.host,
                 database = self.database
             )
-            #print("Now, you're connected\n\n")
             return True
 
         except mysql.connector.errors.ProgrammingError :
@@ -52,7 +51,6 @@ class Program:
             )
             return False
 
-        # print("Now, you're connected\n\n")
 
     def consult_substitue(self):
         '''
@@ -63,7 +61,7 @@ class Program:
         while a:
             try:
                 response = int(input(
-                '1 - Retrouver mes aliments substitués.\n2 - Quel aliment souhaitez-vous remplacer ?\n'
+                '1 - Show your substitues.\n2 - What aliment do you want to replace ?\n'
                 ).upper())
 
                 while (response!=2) and (response!=1):
@@ -102,7 +100,7 @@ class Program:
         for i in range(len(CATEGORY)):
             print('{}. {}'.format(i+1, CATEGORY[i]))
             dict_category[i+1] = CATEGORY[i]
-        #print(self.dict_category)
+
         a = True
         while a:
             try:
@@ -121,6 +119,7 @@ class Program:
         '''
         Show all products of category after the user chooses cat
         '''
+
         print('Here list of products in this category: \n')
         
         cursor = self.cnx.cursor()
@@ -128,7 +127,7 @@ class Program:
         result = cursor.fetchall()
 
         for i in range(len(result)):
-            print('{}. {}'.format(result[i][0], result[i][1])) #fait matcher l'id des produits avec leurs noms
+            print('{}. {}'.format(result[i][0], result[i][1])) #match id product with their name
 
         a = True
         while a:
@@ -156,10 +155,9 @@ class Program:
         cursor.execute(query)
         result = cursor.fetchall()
 
-        #affiche le résultat des produits meilleurs ou equivalent
+        #show results of products have better or equivalent nutriscore
         print('Here the list of product that are better or equivalent:\n')
         for i in range(len(result)):
-            #print('{}. {}, nutriscore ===>{}'.format(result[i][0], result[i][1], result[i][2]))
             print('{}. {} with nutriscore : {}. Can buy at {} more information on this link : {}'.format(result[i][0], result[i][1], result[i][2], result[i][3], result[i][4]))
 
         #define substitue
@@ -180,12 +178,10 @@ class Program:
         while (save != 'Y') and (save!='N'):
             print('You have to put "Y" or "N"')
 
-
         if save == 'Y':
             query = 'INSERT INTO substitue (id_product_to_substitue_fk, id_product_substitue_fk) VALUES ({}, {});'.format(self.id_product_choose, self.id_product_substitue)
             cursor.execute(query)
             self.cnx.commit()
-
 
         cursor.close()
 

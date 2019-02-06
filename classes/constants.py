@@ -8,9 +8,3 @@ CATEGORY = [
     'rillettes-de-thon', 
     'pilons-de-poulet'
 ]
-
-# ,
-
-#     'pur-jus-d-oranges-bio',
-#     'fromage-frais-allege',
-#     'legumes-prepares-surgeles'

@@ -155,10 +155,13 @@ class Program:
         cursor.execute(query)
         result = cursor.fetchall()
 
+        coef = result[0][0]/20
+
         #show results of products have better or equivalent nutriscore
         print('Here the list of product that are better or equivalent:\n')
         for i in range(len(result)):
-            print('{}. {} with nutriscore : {}. Can buy at {} more information on this link : {}'.format(result[i][0], result[i][1], result[i][2], result[i][3], result[i][4]))
+            id = result[i][0]/coef
+            print('{}. {} with nutriscore : {}. Can buy at {} more information on this link : {}'.format(id, result[i][1], result[i][2], result[i][3], result[i][4]))
 
         #define substitue
         a = True

@@ -2,7 +2,8 @@ import argparse
 import mysql.connector
 from classes.collect_data import CollectData
 from classes.sql import Sql
-from classes.constants import CATEGORY
+from classes.constants import CATEGORY, CREDENTIALS
+
 
 
 class Init:
@@ -11,7 +12,7 @@ class Init:
 
     def init_db(self):
 
-        sql = Sql('root', 'root', 'localhost', 'Openfoodfact') #all parameters to etablish connection
+        sql = Sql(CREDENTIALS['username'], CREDENTIALS['password'], CREDENTIALS['host'], 'Openfoodfact') #all parameters to etablish connection
         cnx = sql.connect_db()
         
         cursor = cnx.cursor()

@@ -9,7 +9,7 @@ Once a product chooses the program will propose a list of food having a superior
 ## **Prerequisites:**
 
  - have mysql
- -  create a db named 'openfoodfact'
+ -  create a db named 'Openfoodfact'
 
 
    
@@ -46,16 +46,23 @@ Once a product chooses the program will propose a list of food having a superior
 	 
  - main: main program
 
-## Course of the program:
+## How to use it:
 
 
   
 
-For a first use it is necessary to execute the command:
+For a first use it is necessary to do:
+
+
+ - Change CREDENTIALS in constants file.
+ 
+ Then execute the following command:
 
     python3 main.py --init
 
-  
+ After that you can run the progam:
+
+    python3 main.py
 
 We will ask at first:
 
@@ -68,7 +75,7 @@ These elements are the elements that the user has defined himself to access his 
 
 ## **Warning**
 
-*It is imperative that the database of the user is called 'openfoodfact' (key sensitive)*
+*It is imperative that the database of the user is called 'Openfoodfact' (key sensitive)*
 
   ##
   

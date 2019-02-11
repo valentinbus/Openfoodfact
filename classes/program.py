@@ -1,7 +1,11 @@
+"""
+Json module to parse data
+"""
+
+
 import json
 import re
 import mysql.connector
-import getpass
 from classes.sql import Sql
 from classes.constants import CATEGORY, CREDENTIALS
 
@@ -23,9 +27,9 @@ class Program:
         etablish connection with db
         """
         sql = Sql(
-            CREDENTIALS['username'], 
-            CREDENTIALS['password'], 
-            CREDENTIALS['host'], 
+            CREDENTIALS['username'],
+            CREDENTIALS['password'],
+            CREDENTIALS['host'],
             CREDENTIALS['dbname']
             )
         
@@ -40,13 +44,12 @@ class Program:
         """
         Ask to user if he wants to see his substitues
         """
-
         while True:
             try:
                 response = int(
                     input(
-                        "1 - Show your substitues.\n\
-                        2 - What aliment do you want to replace ?\n"
+                        "1 - Show your substitues.\n"
+                        "2 - What aliment do you want to replace ?\n"
                     ).upper()
                 )
 
@@ -72,8 +75,8 @@ class Program:
             print("\n\nHere list of your substitues :\n--")
             for result in results:
                 print(
-                    "{}. {} with nutriscore : {}. \
-                    Can buy at {} more information on this link : {}"
+                    "{}. {} with nutriscore : {}."
+                    "Can buy at {} more information on this link : {}"
                     .format(
                         i, result[0], result[1], result[2], result[3]
                     )
@@ -81,8 +84,8 @@ class Program:
                 i += 1
 
             print(
-                "Ok, now continue!\n\n\
-                Choose a category of product you want to replace"
+                "Ok, now continue!\n\n"
+                "Choose a category of product you want to replace"
             )
 
         else:
@@ -142,7 +145,7 @@ class Program:
                     "SELECT nutriscore FROM product \
                     WHERE id={} AND category_fk={};"
                     .format(
-                        self.id_product_choose, 
+                        self.id_product_choose,
                         self.cat_id
                     )
                 )
@@ -170,8 +173,8 @@ class Program:
         query = 'SELECT id, name, nutriscore, store, link \
             FROM product WHERE nutriscore <= "{}" \
             AND category_fk={} AND id != {};'.format(
-                self.nutriscore_product_choose, 
-                self.cat_id, 
+                self.nutriscore_product_choose,
+                self.cat_id,
                 self.id_product_choose
             )  
 
@@ -185,12 +188,12 @@ class Program:
         for i in range(len(result)):
             map_id = result[i][0] - coef
             print(
-                "{}. {} with nutriscore : {}. \
-                Can buy at {} more information on this link : {}"
+                "{}. {} with nutriscore : {}. "
+                "Can buy at {} more information on this link : {}"
                 .format(
-                    map_id, result[i][1], 
-                    result[i][2], 
-                    result[i][3], 
+                    map_id, result[i][1],
+                    result[i][2],
+                    result[i][3],
                     result[i][4]
                 )
             )
@@ -216,7 +219,7 @@ class Program:
         if save == "Y":
             query = "INSERT INTO substitue \
                 (id_product_to_substitue_fk, id_product_substitue_fk) VALUES ({}, {});".format(
-                    self.id_product_choose, 
+                    self.id_product_choose,
                     self.id_product_substitue
             )
             cursor.execute(query)
@@ -225,6 +228,10 @@ class Program:
         cursor.close()
 
     def continu(self):
+        """
+        ask to user if he wants to continu or not
+        """
+
         response = str(input('Do you want to continue ?\n"Y" or "N"\n').upper())
         while (response != "Y") and (response != "N"):
             print('You have to put "Y" or "N"')

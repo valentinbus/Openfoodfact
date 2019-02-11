@@ -1,37 +1,47 @@
-from classes import Init 
+'''
+required classes
+'''
+
+from classes import Init
 from classes import Program
 
 
 def main():
+    '''
+    all program
+    '''
+
     prog = Program()
 
     connect = prog.connection_db()
 
     if connect is False:
-        print('You have to put good credentials in ./classes/constants.py CREDENTIALS')
+        print(
+            "You have to put good credentials "
+            "in ./classes/constants.py CREDENTIALS"
+        )
     else:
-        a = True
-        while a:
-            
+        run = True
+        while run:
             prog.consult_substitue()
             prog.show_category()
             prog.show_product()
             prog.purpose_substitue()
 
-            a = prog.continu()
+            run = prog.continu()
 
 
-arg = None
+ARG = None
 
 try:
-    init_db = Init()
-    arg = init_db.arg()
+    INIT_DB = Init()
+    ARG = INIT_DB.arg()
 except AttributeError:
     pass
 
 
 if __name__ == "__main__":
-    if arg is True:
-        arg
+    if ARG is True:
+        ARG
     else:
         main()

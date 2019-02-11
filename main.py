@@ -5,25 +5,30 @@ from classes import Program
 def main():
     prog = Program()
 
-    prog.get_inf()
+    connect = prog.connection_db()
 
-    a = True
-    while a:
-        while prog.connection_db() is False:
-            prog.get_inf()
-            prog.connection_db()
-        print("Now you're connected\n\n")
-        
-        prog.consult_substitue()
-        prog.show_category()
-        prog.show_product()
-        prog.purpose_substitue()
+    if connect is False:
+        print('You have to put good credentials in ./classes/constants.py CREDENTIALS')
+    else:
+        a = True
+        while a:
+            
+            prog.consult_substitue()
+            prog.show_category()
+            prog.show_product()
+            prog.purpose_substitue()
 
-        a = prog.continu()
+            a = prog.continu()
 
 
-init_db = Init()
-arg = init_db.arg()
+arg = None
+
+try:
+    init_db = Init()
+    arg = init_db.arg()
+except AttributeError:
+    pass
+
 
 if __name__ == "__main__":
     if arg is True:

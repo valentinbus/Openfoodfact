@@ -12,11 +12,9 @@ class Init:
 
     def init_db(self):
 
-        sql = Sql(CREDENTIALS['username'], CREDENTIALS['password'], CREDENTIALS['host'], 'Openfoodfact') #all parameters to etablish connection
+        sql = Sql(CREDENTIALS['username'], CREDENTIALS['password'], CREDENTIALS['host'], CREDENTIALS['dbname']) #all parameters to etablish connection
         cnx = sql.connect_db()
-        
         cursor = cnx.cursor()
-
         try:
             cursor.execute('drop table substitue;')
             cnx.commit()
@@ -62,6 +60,7 @@ class Init:
             parser = argparse.ArgumentParser()
             parser.add_argument('--init', '-i', action = 'store_true', help='initalise the db')
             args = parser.parse_args()
+
             if args.init:
                 self.init_db()
                 return True

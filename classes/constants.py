@@ -3,20 +3,20 @@ CATEGORY = [
     'desserts',
     'chocolats-noirs',
     'jus-de-pommes-pur-jus',
-    'viande-hachee',
-    'sashimis',
-    'fromages',
     'biscuits',
-    'poissons',
-    'pains',
     'poulets',
     'jambons',
-    'snacks',
-    'charcuteries'
+    'charcuteries',
+    'produits-laitiers',
+    'plats-prepares',
+    'viandes',
+    'boissons-aux-fruits',
+    'huiles'
 ]
 
 CREDENTIALS = {
     'username' : 'root',
     'password' : 'root',
-    'host' : 'localhost'
+    'host' : 'localhost',
+    'dbname': 'Openfoodfact'
 }

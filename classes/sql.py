@@ -16,13 +16,18 @@ class Sql:
         '''
         Established connection to the db
         '''
-        cnx = mysql.connector.connect(
-            user = self.user,
-            password = self.password,
-            host = self.host,
-            database = self.database
-        )
-        return cnx
+        try:
+            cnx = mysql.connector.connect(
+                user = self.user,
+                password = self.password,
+                host = self.host,
+                database = self.database
+            )
+            return cnx
+
+        except mysql.connector.errors.ProgrammingError:
+            return False
+
         
         
     def create_database(self): #category has to be same argument to create url function

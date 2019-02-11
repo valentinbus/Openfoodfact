@@ -15,8 +15,8 @@ CATEGORY = [
 ]
 
 CREDENTIALS = {
-    'username' : 'root',
-    'password' : 'root',
-    'host' : 'localhost',
-    'dbname': 'Openfoodfact'
+    'username' : '',
+    'password' : '',
+    'host' : '',
+    'dbname': ''
 }

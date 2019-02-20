@@ -2,8 +2,8 @@
 Module uses to use http verb
 """
 
+import sys
 import requests
-
 
 class CollectData:
     """
@@ -46,7 +46,12 @@ class CollectData:
                 }
             except KeyError:
                 pass
-            self.products_list.append(product)
+            
+            try:
+                self.products_list.append(product)
+            except UnboundLocalError:
+                print('Last category is not readable, you have to check syntax for url')
+                sys.exit()
 
     def dict_to_insert_query(self):
         """

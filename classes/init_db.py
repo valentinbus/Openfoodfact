@@ -36,7 +36,7 @@ class Init:
             cnx.commit()
             cursor.close()
         except mysql.connector.errors.ProgrammingError:
-            print("La table substitue de donnée est déjà clean")
+            print("Table substitue already clean")
 
         try:
             cursor = cnx.cursor()
@@ -44,7 +44,7 @@ class Init:
             cnx.commit()
             cursor.close()
         except mysql.connector.errors.ProgrammingError:
-            print("La table product de donnée est déjà clean")
+            print("Table product already clean")
 
         try:
             cursor = cnx.cursor()
@@ -52,7 +52,7 @@ class Init:
             cnx.commit()
             cursor.close()
         except mysql.connector.errors.ProgrammingError:
-            print("La table category de donnée est déjà clean")
+            print("Table category already clean")
 
         sql.create_database()  # initialise table in db
 

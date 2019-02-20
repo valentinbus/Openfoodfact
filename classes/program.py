@@ -3,9 +3,6 @@ Json module to parse data
 """
 
 
-import json
-import re
-import mysql.connector
 from classes.sql import Sql
 from classes.constants import CATEGORY, CREDENTIALS
 
@@ -21,6 +18,7 @@ class Program:
         self.nutriscore_product_choose = None
         self.id_product_choose = None
         self.id_product_substitue = None
+        self.response = ['Y', 'N']
 
     def connection_db(self):
         """
@@ -32,12 +30,12 @@ class Program:
             CREDENTIALS['host'],
             CREDENTIALS['dbname']
             )
-        
+
         if sql.connect_db() is False:
             return False
-        else:
-            self.cnx = sql.connect_db()
-            return True
+
+        self.cnx = sql.connect_db()
+        return True
 
 
     def consult_substitue(self):
@@ -53,7 +51,7 @@ class Program:
                     ).upper()
                 )
 
-                while (response != 2) and (response != 1):
+                while response not in [1, 2]:
                     print("You have to put 1 or 2")
 
                 break
@@ -75,8 +73,8 @@ class Program:
             print("\n\nHere list of your substitues :\n--")
             for result in results:
                 print(
-                    "{}. {} with nutriscore : {}."
-                    "Can buy at {} more information on this link : {}"
+                    "{}. {} with nutriscore : {}.\n"
+                    "Can buy at {} more information on this link : \n{}"
                     .format(
                         i, result[0], result[1], result[2], result[3]
                     )
@@ -98,13 +96,13 @@ class Program:
         dict_category = {}
 
         print("List of categories:\n")
-        for i in range(len(CATEGORY)):
-            print("{}. {}".format(i + 1, CATEGORY[i]))
-            dict_category[i + 1] = CATEGORY[i]
+        for i, cat in enumerate(CATEGORY):
+            print("{}. {}".format(i + 1, cat))
+            dict_category[i + 1] = cat
 
         while True:
             try:
-                self.cat_id = int(input("\n\nChosse id cat : \n"))
+                self.cat_id = int(input("\n\nChoose id cat : \n"))
                 cat_choose = dict_category[self.cat_id]
                 break
             except ValueError:
@@ -160,9 +158,9 @@ class Program:
         cursor.close()
         print(
             "The product you choose have this nutriscore : {} \n\n"
-                .format(
-                    self.nutriscore_product_choose
-                )
+            .format(
+                self.nutriscore_product_choose
+            )
         )
 
     def purpose_substitue(self):
@@ -176,7 +174,7 @@ class Program:
                 self.nutriscore_product_choose,
                 self.cat_id,
                 self.id_product_choose
-            )  
+            )
 
         cursor.execute(query)
         result = cursor.fetchall()
@@ -187,16 +185,19 @@ class Program:
         print("Here the list of product that are better or equivalent:\n")
         for i in range(len(result)):
             map_id = result[i][0] - coef
-            print(
-                "{}. {} with nutriscore : {}. "
-                "Can buy at {} more information on this link : {}"
-                .format(
-                    map_id, result[i][1],
-                    result[i][2],
-                    result[i][3],
-                    result[i][4]
+            if result[i][0] is None:
+                print('There no substitue')
+            else:
+                print(
+                    "{}. {} with nutriscore : {}. \n"
+                    "Can buy at {} more information on this link : \n{}\n"
+                    .format(
+                        map_id, result[i][1],
+                        result[i][2],
+                        result[i][3],
+                        result[i][4]
+                    )
                 )
-            )
 
         # define substitue
         while True:
@@ -213,14 +214,14 @@ class Program:
         # insert into substitue results
         save = input('\nDo you want to save substitue?\n"Y" or "N"\n').upper()
 
-        while (save != "Y") and (save != "N"):
+        while save not in ['Y', 'N']:
             print('You have to put "Y" or "N"')
 
         if save == "Y":
             query = "INSERT INTO substitue \
-                (id_product_to_substitue_fk, id_product_substitue_fk) VALUES ({}, {});".format(
-                    self.id_product_choose,
-                    self.id_product_substitue
+            (id_product_to_substitue_fk, id_product_substitue_fk) VALUES ({}, {});".format(
+                self.id_product_choose,
+                self.id_product_substitue
             )
             cursor.execute(query)
             self.cnx.commit()
@@ -233,10 +234,9 @@ class Program:
         """
 
         response = str(input('Do you want to continue ?\n"Y" or "N"\n').upper())
-        while (response != "Y") and (response != "N"):
+        while response not in self.response:
             print('You have to put "Y" or "N"')
 
         if response == "Y":
             return True
-        else:
-            return False
+        return False

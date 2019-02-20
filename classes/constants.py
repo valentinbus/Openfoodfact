@@ -4,19 +4,22 @@ CATEGORY = [
     'chocolats-noirs',
     'jus-de-pommes-pur-jus',
     'biscuits',
-    'poulets',
+    #'poulets',
     'jambons',
     'charcuteries',
     'produits-laitiers',
     'plats-prepares',
-    'viandes',
-    'boissons-aux-fruits',
-    'huiles'
+    #'viandes',
+    #'boissons-aux-fruits',
+    'huiles',
+    'viennoiseries',
+    'thons',
+
 ]
 
 CREDENTIALS = {
-    'username' : '',
-    'password' : '',
-    'host' : '',
-    'dbname': ''
+    'username' : 'root',
+    'password' : 'root',
+    'host' : 'localhost',
+    'dbname': 'Openfoodfact'
 }
